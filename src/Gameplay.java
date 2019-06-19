@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -17,8 +18,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = -4300610749422495781L;
-	private int[] snakeXRange = new int[750];		//class om arrays Xpositie en Y positie te bepalen, max length
-	private int[] snakeYRange = new int[750];
+	private int[] snakeXrange = new int[750];		//class om arrays Xpositie en Y positie te bepalen, max length
+	private int[] snakeYrange = new int[750];
 	
 	private boolean up = false;						//variablen  om te controleren welke kant wij opgaan
 	private boolean down = false;
@@ -36,6 +37,19 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 	private Timer movement;							//bepaalt snelheid slang
 	private int delay = 100;
 	private ImageIcon snakeBody;					//variabel voor lichaam: snakebody
+	
+	private int [] foodXposition = {25, 50, 75, 100, 125, 150, 175, 200, 225, 
+			250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 
+			575, 600, 625, 650, 675, 700, 725, 750, 775, 800, 825, 850,};
+	private int [] foodYposition = {75, 100, 125, 150, 175, 200, 225, 250, 275, 
+			300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575, 600, 625};
+	
+	private ImageIcon food;
+	
+	private Random random = new Random();
+	private int randomXposition = random.nextInt(34);
+	private int randomYposition = random.nextInt(23);
+		
 	
 	private int moves = 0;
 	
@@ -55,13 +69,13 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 	{
 		if(moves == 0)								//Wanneer het spel (opnieuw) start: voer deze positie uit. Wanneer spel bezig: custom gegevens
 		{
-			snakeXRange[2] = 50;					//bepaalt de positie van elk bolletje: de ketting
-			snakeXRange[1] = 75;
-			snakeXRange[0] = 100;
+			snakeXrange[2] = 50;					//bepaalt de positie van elk bolletje: de ketting
+			snakeXrange[1] = 75;
+			snakeXrange[0] = 100;
 			
-			snakeYRange[2] = 100;
-			snakeYRange[1] = 100;
-			snakeYRange[0] = 100;
+			snakeYrange[2] = 100;
+			snakeYrange[1] = 100;
+			snakeYrange[0] = 100;
 		}
 		
 		// rectangle Header
@@ -81,7 +95,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 		g.fillRect(25, 75, 850, 575);
 		
 		faceRight = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceRight.png");							//Slang zonder movement/ Snake draw (verander naar right later)
-		faceRight.paintIcon(this, g, snakeXRange[0], snakeYRange[0]);
+		faceRight.paintIcon(this, g, snakeXrange[0], snakeYrange[0]);
 		
 		for (int a = 0; a< snakeLength; a++)									//Loop, en in brackets; if-statement om de richting te bepalen
 		{
@@ -89,31 +103,43 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 			if (a==0 && up)
 			{
 				faceUp = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceUp.png");
-				faceUp.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);
+				faceUp.paintIcon(this, g, snakeXrange[a], snakeYrange[a]);
 			}
 			if (a==0 && down)
 			{
 				faceDown = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceDown.png");
-				faceDown.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);
+				faceDown.paintIcon(this, g, snakeXrange[a], snakeYrange[a]);
 			}
 			if (a==0 && left)
 			{
 				faceLeft = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceLeft.png");
-				faceLeft.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);
+				faceLeft.paintIcon(this, g, snakeXrange[a], snakeYrange[a]);
 			}
 			if (a==0 && right)
 			{
 				faceRight = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceRight.png");
-				faceRight.paintIcon(this, g, snakeXRange[a], snakeYRange[a]); 
+				faceRight.paintIcon(this, g, snakeXrange[a], snakeYrange[a]); 
 			}
 			
 			if (a!=0)
 			{
 				snakeBody = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\snakeBody.png");
-				snakeBody.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);	//(teken) Paint (deze) this (afb) icon (afb) aan de hand van de snake X positie, en volg de loop. (en .painticon is on its own)
+				snakeBody.paintIcon(this, g, snakeXrange[a], snakeYrange[a]);	//(teken) Paint (deze) this (afb) icon (afb) aan de hand van de snake X positie, en volg de loop. (en .painticon is on its own)
 			}
 		}
 		
+		
+		food = new ImageIcon("D:\\Java Projects\\snakeDesktopApp\\src\\food.png");
+		
+		if((foodXposition [randomXposition] == snakeXrange[0] && foodYposition [randomYposition] == snakeYrange[0])) //has the head collided?
+		{
+			snakeLength++;								//has the head collided? if true add length: "++". "++"increases the VALUE of an VARIABLE by one increment
+			randomXposition = random.nextInt (34);
+			randomYposition = random.nextInt (23);
+		}
+		
+		food.paintIcon(this, g, foodXposition [randomXposition], foodYposition [randomYposition]);
+
 		
 		g.dispose();
 	}
@@ -125,21 +151,21 @@ public void actionPerformed(ActionEvent e) {
 	{
 		for (int r = snakeLength-1; r>=0; r--)
 		{
-			snakeXRange[r+1] = snakeXRange[r];
+			snakeXrange[r+1] = snakeXrange[r];
 		}
 		for (int r = snakeLength; r>=0; r--)
 		{
 			if (r==0)
 			{
-				snakeYRange [r] = snakeYRange [r] - 25;
+				snakeYrange [r] = snakeYrange [r] - 25;
 			}
 			else
 			{
-				snakeYRange[r] = snakeYRange[r-1];
+				snakeYrange[r] = snakeYrange[r-1];
 			}
-			if (snakeYRange[r] < 75) //als de slang 75 raakt, dan van andere kant komen (positie resetten naar 25)
+			if (snakeYrange[r] < 75) //als de slang 75 raakt, dan van andere kant komen (positie resetten naar 25)
 			{
-				snakeYRange[r] = 625;
+				snakeYrange[r] = 625;
 			}
 			
 			repaint(); //deze method roept de paintmethod bovenin roept
@@ -149,21 +175,21 @@ public void actionPerformed(ActionEvent e) {
 	{
 		for (int r = snakeLength-1; r>=0; r--)
 		{
-			snakeXRange[r+1] = snakeXRange[r];
+			snakeXrange[r+1] = snakeXrange[r];
 		}
 		for (int r = snakeLength; r>=0; r--)
 		{
 			if (r==0)
 			{
-				snakeYRange [r] = snakeYRange [r] + 25;
+				snakeYrange [r] = snakeYrange [r] + 25;
 			}
 			else
 			{
-				snakeYRange[r] = snakeYRange[r-1];
+				snakeYrange[r] = snakeYrange[r-1];
 			}
-			if (snakeYRange[r] > 625) //als de slang 625 raakt, dan van andere kant komen (positie resetten naar 25)
+			if (snakeYrange[r] > 625) //als de slang 625 raakt, dan van andere kant komen (positie resetten naar 25)
 			{
-				snakeYRange[r] = 75;
+				snakeYrange[r] = 75;
 			}
 			
 			repaint(); //deze method roept de paintmethod bovenin roept
@@ -173,21 +199,21 @@ public void actionPerformed(ActionEvent e) {
 	{
 		for (int r = snakeLength-1; r>=0; r--)
 		{
-			snakeYRange[r+1] = snakeYRange[r];
+			snakeYrange[r+1] = snakeYrange[r];
 		}
 		for (int r = snakeLength; r>=0; r--)
 		{
 			if (r==0)
 			{
-				snakeXRange [r] = snakeXRange [r] - 25;
+				snakeXrange [r] = snakeXrange [r] - 25;
 			}
 			else
 			{
-				snakeXRange[r] = snakeXRange[r-1];
+				snakeXrange[r] = snakeXrange[r-1];
 			}
-			if (snakeXRange[r] < 25) //als de slang 850 raakt, dan van andere kant komen (positie resetten naar 25)
+			if (snakeXrange[r] < 25) //als de slang 850 raakt, dan van andere kant komen (positie resetten naar 25)
 			{
-				snakeXRange  [r] = 850;
+				snakeXrange  [r] = 850;
 			} 
 			
 			repaint(); //deze method roept de paintmethod bovenin roept
@@ -198,21 +224,21 @@ public void actionPerformed(ActionEvent e) {
 		
 		for (int r = snakeLength-1; r>=0; r--)
 		{
-			snakeYRange[r+1] = snakeYRange[r];
+			snakeYrange[r+1] = snakeYrange[r];
 		}
 		for (int r = snakeLength; r>=0; r--)
 		{
 			if (r==0)
 			{
-				snakeXRange [r] = snakeXRange [r] + 25;
+				snakeXrange [r] = snakeXrange [r] + 25;
 			}
 			else
 			{
-				snakeXRange[r] = snakeXRange[r-1];
+				snakeXrange[r] = snakeXrange[r-1];
 			}
-			if (snakeXRange[r] > 850) //als de slang 850 raakt, dan van andere kant komen (positie resetten naar 25)
+			if (snakeXrange[r] > 850) //als de slang 850 raakt, dan van andere kant komen (positie resetten naar 25)
 			{
-				snakeXRange  [r] = 25;
+				snakeXrange  [r] = 25;
 			}
 			
 			repaint(); //deze method roept de paintmethod bovenin roept
