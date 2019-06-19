@@ -104,7 +104,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 			if (a==0 && right)
 			{
 				faceRight = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceRight.png");
-				faceRight.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);
+				faceRight.paintIcon(this, g, snakeXRange[a], snakeYRange[a]); 
 			}
 			
 			if (a!=0)
@@ -147,15 +147,76 @@ public void actionPerformed(ActionEvent e) {
 	}
 	if (down)
 	{
-		
+		for (int r = snakeLength-1; r>=0; r--)
+		{
+			snakeXRange[r+1] = snakeXRange[r];
+		}
+		for (int r = snakeLength; r>=0; r--)
+		{
+			if (r==0)
+			{
+				snakeYRange [r] = snakeYRange [r] + 25;
+			}
+			else
+			{
+				snakeYRange[r] = snakeYRange[r-1];
+			}
+			if (snakeYRange[r] > 625) //als de slang 625 raakt, dan van andere kant komen (positie resetten naar 25)
+			{
+				snakeYRange[r] = 75;
+			}
+			
+			repaint(); //deze method roept de paintmethod bovenin roept
+		}
 	}
 	if (left)
 	{
-		
+		for (int r = snakeLength-1; r>=0; r--)
+		{
+			snakeYRange[r+1] = snakeYRange[r];
+		}
+		for (int r = snakeLength; r>=0; r--)
+		{
+			if (r==0)
+			{
+				snakeXRange [r] = snakeXRange [r] - 25;
+			}
+			else
+			{
+				snakeXRange[r] = snakeXRange[r-1];
+			}
+			if (snakeXRange[r] < 25) //als de slang 850 raakt, dan van andere kant komen (positie resetten naar 25)
+			{
+				snakeXRange  [r] = 850;
+			} 
+			
+			repaint(); //deze method roept de paintmethod bovenin roept
+		}
 	}
 	if (right)
 	{
 		
+		for (int r = snakeLength-1; r>=0; r--)
+		{
+			snakeYRange[r+1] = snakeYRange[r];
+		}
+		for (int r = snakeLength; r>=0; r--)
+		{
+			if (r==0)
+			{
+				snakeXRange [r] = snakeXRange [r] + 25;
+			}
+			else
+			{
+				snakeXRange[r] = snakeXRange[r-1];
+			}
+			if (snakeXRange[r] > 850) //als de slang 850 raakt, dan van andere kant komen (positie resetten naar 25)
+			{
+				snakeXRange  [r] = 25;
+			}
+			
+			repaint(); //deze method roept de paintmethod bovenin roept
+		}
 	}
 	
 }
