@@ -8,7 +8,7 @@ public class Main {
 		JFrame obj = new JFrame (); //Object
 		Gameplay gameplay = new Gameplay (); //Object
 		
-		obj.add(gameplay); //was voorheen onderaan
+		
 		
 		obj.setBounds(10, 10, 905, 700); //
 		obj.setBackground(Color.DARK_GRAY);
@@ -16,7 +16,7 @@ public class Main {
 		obj.setVisible (true);
 		obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
+		obj.add(gameplay);
 		
 
 	}

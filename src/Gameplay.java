@@ -13,6 +13,10 @@ import javax.swing.Timer;
 public class Gameplay extends JPanel implements KeyListener, ActionListener{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4300610749422495781L;
 	private int[] snakeXRange = new int[750];		//class om arrays Xpositie en Y positie te bepalen, max length
 	private int[] snakeYRange = new int[750];
 	
@@ -51,7 +55,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 	{
 		if(moves == 0)								//Wanneer het spel (opnieuw) start: voer deze positie uit. Wanneer spel bezig: custom gegevens
 		{
-			snakeXRange[2] = 50;                   //bepaalt de positie van elk bolletje: de ketting
+			snakeXRange[2] = 50;					//bepaalt de positie van elk bolletje: de ketting
 			snakeXRange[1] = 75;
 			snakeXRange[0] = 100;
 			
@@ -65,7 +69,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 		g.drawRect(24, 74, 851, 577);
 		
 		// view the Header, variabel 
-		icon = new ImageIcon("gameHeader.jpg");
+		icon = new ImageIcon("D:\\Java Projects\\snakeDesktopApp\\src\\gameHeader.jpg");
 		icon.paintIcon(this, g, 25, 11);
 		
 		// draw border for gameplay
@@ -76,7 +80,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 		g.setColor(Color.black);
 		g.fillRect(25, 75, 850, 575);
 		
-		faceRight = new ImageIcon ("faceRight.png");							//Slang zonder movement/ Snake draw (verander naar right later)
+		faceRight = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceRight.png");							//Slang zonder movement/ Snake draw (verander naar right later)
 		faceRight.paintIcon(this, g, snakeXRange[0], snakeYRange[0]);
 		
 		for (int a = 0; a< snakeLength; a++)									//Loop, en in brackets; if-statement om de richting te bepalen
@@ -84,28 +88,28 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 			
 			if (a==0 && up)
 			{
-				faceUp = new ImageIcon ("faceUp.png");
+				faceUp = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceUp.png");
 				faceUp.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);
 			}
 			if (a==0 && down)
 			{
-				faceDown = new ImageIcon ("faceDown.png");
+				faceDown = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceDown.png");
 				faceDown.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);
 			}
 			if (a==0 && left)
 			{
-				faceLeft = new ImageIcon ("faceLeft.png");
+				faceLeft = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceLeft.png");
 				faceLeft.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);
 			}
 			if (a==0 && right)
 			{
-				faceRight = new ImageIcon ("faceRight.png");
+				faceRight = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceRight.png");
 				faceRight.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);
 			}
 			
 			if (a!=0)
 			{
-				snakeBody = new ImageIcon ("snakeBody.png");
+				snakeBody = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\snakeBody.png");
 				snakeBody.paintIcon(this, g, snakeXRange[a], snakeYRange[a]);	//(teken) Paint (deze) this (afb) icon (afb) aan de hand van de snake X positie, en volg de loop. (en .painticon is on its own)
 			}
 		}
