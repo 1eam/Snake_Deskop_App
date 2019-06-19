@@ -8,6 +8,8 @@ public class Main {
 		JFrame obj = new JFrame (); //Object
 		Gameplay gameplay = new Gameplay (); //Object
 		
+		obj.add(gameplay); //was voorheen onderaan
+		
 		obj.setBounds(10, 10, 905, 700); //
 		obj.setBackground(Color.DARK_GRAY);
 		obj.setResizable(false);
@@ -15,7 +17,6 @@ public class Main {
 		obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
-		obj.add(gameplay);
 		
 
 	}
