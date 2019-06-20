@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,6 +50,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 	private Random random = new Random();
 	private int randomXposition = random.nextInt(34);
 	private int randomYposition = random.nextInt(23);
+	
+	private int scores = 0; 
 		
 	
 	private int moves = 0;
@@ -79,7 +82,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 		}
 		
 		// rectangle Header
-		g.setColor(Color.WHITE);
+		g.setColor(Color.white);
 		g.drawRect(24, 74, 851, 577);
 		
 		// view the Header, variabel 
@@ -87,12 +90,22 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 		icon.paintIcon(this, g, 25, 11);
 		
 		// draw border for gameplay
-		g.setColor(Color.WHITE);
+		g.setColor(Color.white);
 		g.drawRect(24, 75, 851, 577);
 		
 		// draw background gameplay
 		g.setColor(Color.black);
 		g.fillRect(25, 75, 850, 575);
+		
+		//view scoresboard
+		g.setColor(Color.white);
+		g.setFont(new Font ("arial", Font.PLAIN, 16));
+		g.drawString("Score: "+ scores, 740, 33);
+		
+		//Total snake length
+		g.setColor(Color.white);
+		g.setFont(new Font ("arial", Font.PLAIN, 16));
+		g.drawString("Totale Lengte: "+ snakeLength, 740, 53);					//weergeeft de inhoud/waarde van deze variabel
 		
 		faceRight = new ImageIcon ("D:\\Java Projects\\snakeDesktopApp\\src\\faceRight.png");							//Slang zonder movement/ Snake draw (verander naar right later)
 		faceRight.paintIcon(this, g, snakeXrange[0], snakeYrange[0]);
@@ -133,6 +146,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener{
 		
 		if((foodXposition [randomXposition] == snakeXrange[0] && foodYposition [randomYposition] == snakeYrange[0])) //has the head collided?
 		{
+			scores++;
 			snakeLength++;								//has the head collided? if true add length: "++". "++"increases the VALUE of an VARIABLE by one increment
 			randomXposition = random.nextInt (34);
 			randomYposition = random.nextInt (23);
